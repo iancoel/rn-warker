@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { BreadProvider } from 'material-bread';
 import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import Explore from './src/screens/Explore';
