@@ -1,12 +1,13 @@
 import { BreadProvider } from 'material-bread';
 import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import Explore from './src/screens/Explore';
+import Filter from './src/screens/Filter';
 
 export default function App() {
   return (
     <BreadProvider>
       <SafeAreaView style={styles.container}>
-        <Explore />
+        <Filter />
       </SafeAreaView>
     </BreadProvider>
   );
