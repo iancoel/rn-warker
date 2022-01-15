@@ -1,10 +1,13 @@
 import 'react-native-gesture-handler';
 import { BreadProvider } from 'material-bread';
 import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Explore from './src/screens/Explore';
 import Filter from './src/screens/Filter';
 
 export default function App() {
+  const Stack = createStackNavigator();
+
   return (
     <BreadProvider>
       <SafeAreaView style={styles.container}>
