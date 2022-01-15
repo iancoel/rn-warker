@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Title, Container } from './styles';
 import MapView from 'react-native-maps';
+import { Searchbar } from 'material-bread';
 
 const Explore = () => {
   return (
@@ -9,6 +10,7 @@ const Explore = () => {
       <Container>
         <Title>Explorar</Title>
       </Container>
+
       <MapView
         style={styles.map}
         initialRegion={{
@@ -18,6 +20,22 @@ const Explore = () => {
           longitudeDelta: 0.0421,
         }}
       />
+
+      <View
+        style={{
+          width: '100%',
+          alignItems: 'center',
+          position: 'absolute',
+          top: 120,
+        }}
+      >
+        <Searchbar
+          style={{ width: '85%', position: 'relative', borderRadius: 5 }}
+          placeholder="Encontre um posto e salve-se!"
+          navigationIcon="search"
+          closeIcon="filter-list"
+        />
+      </View>
     </>
   );
 };
