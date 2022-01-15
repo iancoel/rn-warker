@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Title, Container, CardContainer, CardHeader } from './styles';
 import MapView from 'react-native-maps';
-import { Icon, Searchbar, Card, CardMedia } from 'material-bread';
+import { Icon, Searchbar, Card, CardMedia, Button } from 'material-bread';
 import cardBg from '../../assets/images/background-header-bg.png';
 import avatar from '../../assets/images/avatar.png';
 
@@ -138,6 +138,23 @@ const Explore = () => {
             </View>
           </View>
         </Card>
+      </View>
+
+      <View
+        style={{
+          width: '100%',
+          alignItems: 'center',
+          position: 'absolute',
+          bottom: 32,
+        }}
+      >
+        <Button
+          text={'Estou com sede!'}
+          type="flat"
+          icon={<Icon name="local-gas-station" />}
+          color={'#F44336'}
+          style={{ width: 334, height: 50, paddingVertical: 15 }}
+        />
       </View>
     </>
   );
