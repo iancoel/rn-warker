@@ -6,13 +6,16 @@ import { useNavigation } from '@react-navigation/native';
 import { Icon, Searchbar, Card, CardMedia, Button } from 'material-bread';
 import cardBg from '../../assets/images/background-header-bg.png';
 import avatar from '../../assets/images/avatar.png';
+import userMarker from '../../assets/images/user-marker.png';
 import api from '../../utils/api';
 import { useState } from 'react';
-import { posto } from '../../interfaces';
+import { posto, userLocation } from '../../interfaces';
+import * as Location from 'expo-location';
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [postos, setPostos] = useState<posto[]>([]);
+  const [userLocation, setUserLocation] = useState<userLocation>();
 
   const navigation: void | any = useNavigation();
   const handleChangeToFilter = () => {
@@ -28,6 +31,22 @@ const Explore = () => {
       })
       .catch((error) => console.warn(error))
       .finally(() => setLoading(false));
+  }, []);
+
+  //puxa dados da localização do usuário
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    })();
   }, []);
 
   if (loading) {
@@ -48,8 +67,8 @@ const Explore = () => {
       <MapView
         style={styles.map}
         initialRegion={{
-          longitude: -38.56945,
-          latitude: -3.77174,
+          longitude: userLocation ? userLocation.latitude : -38.56945,
+          latitude: userLocation ? userLocation.longitude : -3.77174,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -65,6 +84,18 @@ const Explore = () => {
             description={`Atualizado em ${posto.update_at}`}
           />
         ))}
+        {userLocation && (
+          <Marker
+            coordinate={{
+              latitude: +userLocation?.latitude,
+              longitude: +userLocation?.longitude,
+            }}
+            title="Usuário"
+            description="Descrição do usuário"
+          >
+            <Image source={userMarker} style={{ height: 20, width: 20 }} />
+          </Marker>
+        )}
       </MapView>
 
       <View
@@ -199,7 +230,6 @@ const Explore = () => {
           icon={<Icon name="local-gas-station" />}
           color={'#F44336'}
           style={{ width: 334, height: 50, paddingVertical: 15 }}
-          onPress={() => console.log(postos.length)}
         />
       </View>
     </>

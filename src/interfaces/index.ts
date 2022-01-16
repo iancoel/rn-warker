@@ -14,3 +14,8 @@ export interface posto {
   created_at: Date;
   update_at: Date;
 }
+
+export interface userLocation {
+  latitude: number;
+  longitude: number;
+}
