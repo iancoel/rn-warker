@@ -54,21 +54,17 @@ const Explore = () => {
           longitudeDelta: 0.0421,
         }}
       >
-        {postos.length > 0 ? (
-          postos.map((posto, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: +posto.coords.longitude,
-                longitude: +posto.coords.latitude,
-              }}
-              title={`ID: ${posto.id}`}
-              description={`Atualizado em ${posto.update_at}`}
-            />
-          ))
-        ) : (
-          <View></View>
-        )}
+        {postos.map((posto, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: +posto.coords.longitude,
+              longitude: +posto.coords.latitude,
+            }}
+            title={`ID: ${posto.id}`}
+            description={`Atualizado em ${posto.update_at}`}
+          />
+        ))}
       </MapView>
 
       <View
