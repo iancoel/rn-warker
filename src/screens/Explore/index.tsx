@@ -17,6 +17,7 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [postos, setPostos] = useState<posto[]>([]);
   const [userLocation, setUserLocation] = useState<userLocation>();
+  const [thirsty, setThirsty] = useState(false);
   const navigation: void | any = useNavigation();
   const handleChangeToFilter = () => {
     navigation.navigate('Filter');
@@ -108,7 +109,7 @@ const Explore = () => {
         )}
 
         {/* Direção para o botão 'Estou com sede!' */}
-        {userLocation && (
+        {userLocation && thirsty && (
           <MapViewDirections
             origin={{
               latitude: +userLocation?.latitude,
@@ -255,7 +256,7 @@ const Explore = () => {
           icon={<Icon name="local-gas-station" />}
           color={'#F44336'}
           style={{ width: 334, height: 50, paddingVertical: 15 }}
-          onPress={() => console.log(new Date(postos[0].updated_at))}
+          onPress={() => setThirsty((prev) => !prev)}
         />
       </View>
     </>
