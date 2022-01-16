@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Title, Container, CardContainer, CardHeader } from './styles';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Searchbar, Card, CardMedia, Button } from 'material-bread';
 import cardBg from '../../assets/images/background-header-bg.png';
 import avatar from '../../assets/images/avatar.png';
+import api from '../../utils/api';
+import { useState } from 'react';
+import { posto } from '../../interfaces';
 
 const Explore = () => {
+  const [loading, setLoading] = useState(true);
+  const [postos, setPostos] = useState<posto[]>([]);
+
   const navigation: void | any = useNavigation();
   const handleChangeToFilter = () => {
     navigation.navigate('Filter');
   };
+
+  //puxar dados de todos os reservatórios
+  useEffect(() => {
+    api
+      .get('api/posto')
+      .then((response) => {
+        setPostos(response.data.data);
+      })
+      .catch((error) => console.warn(error))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <Container>
+        <Title>Carregando...</Title>
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -19,15 +44,32 @@ const Explore = () => {
         <Title>Explorar</Title>
       </Container>
 
+      {/* Trocar long e lat da api */}
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          longitude: -38.56945,
+          latitude: -3.77174,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
+      >
+        {postos.length > 0 ? (
+          postos.map((posto, index) => (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: +posto.coords.longitude,
+                longitude: +posto.coords.latitude,
+              }}
+              title={`ID: ${posto.id}`}
+              description={`Atualizado em ${posto.update_at}`}
+            />
+          ))
+        ) : (
+          <View></View>
+        )}
+      </MapView>
 
       <View
         style={{
@@ -161,6 +203,7 @@ const Explore = () => {
           icon={<Icon name="local-gas-station" />}
           color={'#F44336'}
           style={{ width: 334, height: 50, paddingVertical: 15 }}
+          onPress={() => console.log(postos.length)}
         />
       </View>
     </>
