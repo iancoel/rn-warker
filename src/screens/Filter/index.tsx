@@ -14,14 +14,24 @@ import {
   Slider,
   Button,
 } from 'material-bread';
+import { useNavigation } from '@react-navigation/native';
 
 const Filter = () => {
   const [sliderValue, setSliderValue] = useState(0);
 
+  const navigation: void | any = useNavigation();
+  const handleChangeToExplore = () => {
+    navigation.navigate('Explore');
+  };
+
   return (
     <>
       <Container>
-        <IconButton name="keyboard-arrow-left" size={24} />
+        <IconButton
+          name="keyboard-arrow-left"
+          size={24}
+          onPress={handleChangeToExplore}
+        />
 
         <Title>Filtro</Title>
       </Container>

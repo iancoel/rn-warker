@@ -2,11 +2,17 @@ import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Title, Container, CardContainer, CardHeader } from './styles';
 import MapView from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
 import { Icon, Searchbar, Card, CardMedia, Button } from 'material-bread';
 import cardBg from '../../assets/images/background-header-bg.png';
 import avatar from '../../assets/images/avatar.png';
 
 const Explore = () => {
+  const navigation: void | any = useNavigation();
+  const handleChangeToFilter = () => {
+    navigation.navigate('Filter');
+  };
+
   return (
     <>
       <Container>
@@ -35,6 +41,7 @@ const Explore = () => {
           style={{ width: '85%', position: 'relative', borderRadius: 5 }}
           placeholder="Encontre um posto e salve-se!"
           navigationIcon="search"
+          onCloseIcon={handleChangeToFilter}
           closeIcon="filter-list"
         />
       </View>
