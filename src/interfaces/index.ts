@@ -12,7 +12,7 @@ export interface posto {
     longitude: number;
   };
   created_at: Date;
-  update_at: Date;
+  updated_at: Date;
 }
 
 export interface userLocation {

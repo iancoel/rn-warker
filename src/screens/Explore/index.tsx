@@ -67,8 +67,8 @@ const Explore = () => {
       <MapView
         style={styles.map}
         initialRegion={{
-          longitude: userLocation ? userLocation.latitude : -38.56945,
-          latitude: userLocation ? userLocation.longitude : -3.77174,
+          longitude: userLocation ? userLocation.longitude : -38.56945,
+          latitude: userLocation ? userLocation.latitude : -3.77174,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -81,7 +81,11 @@ const Explore = () => {
               longitude: +posto.coords.latitude,
             }}
             title={`ID: ${posto.id}`}
-            description={`Atualizado em ${posto.update_at}`}
+            description={`Atualizado em ${new Date(
+              posto.updated_at,
+            ).getDate()}/${new Date(posto.updated_at).getMonth()}/${new Date(
+              posto.updated_at,
+            ).getFullYear()}`}
           />
         ))}
         {userLocation && (
@@ -230,6 +234,7 @@ const Explore = () => {
           icon={<Icon name="local-gas-station" />}
           color={'#F44336'}
           style={{ width: 334, height: 50, paddingVertical: 15 }}
+          onPress={() => console.log(new Date(postos[0].updated_at))}
         />
       </View>
     </>
