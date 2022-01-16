@@ -73,6 +73,7 @@ const Explore = () => {
           longitudeDelta: 0.0421,
         }}
       >
+        {/* Renderiza os markers de postos */}
         {postos.map((posto, index) => (
           <Marker
             key={index}
@@ -88,6 +89,8 @@ const Explore = () => {
             ).getFullYear()}`}
           />
         ))}
+
+        {/* Renderiza o marker do usuário se possuir a localização */}
         {userLocation && (
           <Marker
             coordinate={{
