@@ -11,16 +11,19 @@ import api from '../../utils/api';
 import { useState } from 'react';
 import { posto, userLocation } from '../../interfaces';
 import * as Location from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions';
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [postos, setPostos] = useState<posto[]>([]);
   const [userLocation, setUserLocation] = useState<userLocation>();
-
   const navigation: void | any = useNavigation();
   const handleChangeToFilter = () => {
     navigation.navigate('Filter');
   };
+
+  //INSERIR GOOGLE MAPS API KEY
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyDhASgBa4aEwquBYPXgPq3GhzNiXhnUbK4';
 
   //puxar dados de todos os reservatórios
   useEffect(() => {
@@ -102,6 +105,21 @@ const Explore = () => {
           >
             <Image source={userMarker} style={{ height: 20, width: 20 }} />
           </Marker>
+        )}
+
+        {/* Direção para o botão 'Estou com sede!' */}
+        {userLocation && (
+          <MapViewDirections
+            origin={{
+              latitude: +userLocation?.latitude,
+              longitude: +userLocation?.longitude,
+            }}
+            destination={{
+              longitude: +postos[1].coords.latitude,
+              latitude: +postos[1].coords.longitude,
+            }}
+            apikey={GOOGLE_MAPS_API_KEY}
+          />
         )}
       </MapView>
 
