@@ -25,8 +25,7 @@ const Explore = () => {
   };
 
   //INSERIR GOOGLE MAPS API KEY
-  // const GOOGLE_MAPS_API_KEY = 'AIzaSyDhASgBa4aEwquBYPXgPq3GhzNiXhnUbK4';
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyBP_c1NZivCQQduKMIzg4rTjQ4RWWw-vzQ';
+  const GOOGLE_MAPS_API_KEY = '';
 
   //puxar dados de todos os reservatórios
   useEffect(() => {
@@ -145,6 +144,7 @@ const Explore = () => {
         )}
       </MapView>
 
+      {/* Searchbar */}
       <View
         style={{
           width: '100%',
@@ -162,6 +162,7 @@ const Explore = () => {
         />
       </View>
 
+      {/* Card do posto do Wark */}
       <View
         style={{
           width: '100%',
@@ -263,6 +264,7 @@ const Explore = () => {
         </Card>
       </View>
 
+      {/* Botão 'Estou com sede!' */}
       <View
         style={{
           width: '100%',
