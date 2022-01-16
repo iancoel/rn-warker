@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { posto, userLocation } from '../../interfaces';
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
+import getDistance from '../../utils/getDistance';
 
 const Explore = () => {
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,8 @@ const Explore = () => {
   };
 
   //INSERIR GOOGLE MAPS API KEY
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyDhASgBa4aEwquBYPXgPq3GhzNiXhnUbK4';
+  // const GOOGLE_MAPS_API_KEY = 'AIzaSyDhASgBa4aEwquBYPXgPq3GhzNiXhnUbK4';
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyBP_c1NZivCQQduKMIzg4rTjQ4RWWw-vzQ';
 
   //puxar dados de todos os reservatórios
   useEffect(() => {
@@ -52,6 +54,25 @@ const Explore = () => {
       });
     })();
   }, []);
+
+  //calcular index do posto mais perto do state postos
+  let indexOfClosest = 99999999;
+  let smallestDistance = 99999999;
+  if (userLocation) {
+    postos.forEach((posto, index) => {
+      const distance = getDistance(
+        userLocation?.latitude,
+        userLocation?.longitude,
+        posto.coords.longitude,
+        posto.coords.latitude,
+      );
+
+      if (distance < smallestDistance) {
+        indexOfClosest = index;
+        smallestDistance = distance;
+      }
+    });
+  }
 
   if (loading) {
     return (
@@ -116,8 +137,8 @@ const Explore = () => {
               longitude: +userLocation?.longitude,
             }}
             destination={{
-              longitude: +postos[1].coords.latitude,
-              latitude: +postos[1].coords.longitude,
+              longitude: +postos[indexOfClosest].coords.latitude,
+              latitude: +postos[indexOfClosest].coords.longitude,
             }}
             apikey={GOOGLE_MAPS_API_KEY}
           />
