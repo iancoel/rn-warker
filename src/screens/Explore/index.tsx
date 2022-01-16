@@ -251,7 +251,12 @@ const Explore = () => {
         }}
       >
         <Button
-          text={'Estou com sede!'}
+          disabled={userLocation ? false : true}
+          text={
+            userLocation
+              ? 'Estou com sede!'
+              : 'Ative o GPS para usar este botão'
+          }
           type="flat"
           icon={<Icon name="local-gas-station" />}
           color={'#F44336'}
